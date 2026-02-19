@@ -52,6 +52,16 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    adminer:
+        image: adminer
+        ports:
+            - "7777:8080"
+        depends_on:
+            - mysql
+        environment:
+            ADMINER_DESIGN: ${DB_ADMINER_DESIGN}
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
