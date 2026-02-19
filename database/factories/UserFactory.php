@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\Roles;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -34,11 +36,37 @@ class UserFactory extends Factory
 
     /**
      * Indicate that the model's email address should be unverified.
+     * 
+     * @return static
      */
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Indicate that the user should have the "agent" role.
+     * 
+     * @return static
+     */
+    public function agent(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole(Roles::AGENT->value);
+        });
+    }
+
+    /**
+     * Indicate that the user should have the "player" role.
+     * 
+     * @return static
+     */
+    public function player(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole(Roles::PLAYER->value);
+        });
     }
 }
