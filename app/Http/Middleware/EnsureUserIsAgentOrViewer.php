@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserIsAgent
+class EnsureUserIsAgentOrViewer
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,10 @@ class EnsureUserIsAgent
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || !auth()->user()->hasRole(Roles::AGENT->value)) {
-            abort(403);
+        if (!auth()->check()
+            || !auth()->user()->hasAnyRole([Roles::AGENT->value, Roles::VIEWER->value])
+        ) {
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         return $next($request);

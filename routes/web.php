@@ -14,7 +14,7 @@ Route::get('/', function () {
     return redirect()->route('players.index');
 });
 
-Route::middleware(['auth', 'agent'])->group(function () {
+Route::middleware(['auth', 'agent-viewer'])->group(function () {
     // Dashboard and profile routes.
     Route::view('profile', 'profile')->name('profile');
     

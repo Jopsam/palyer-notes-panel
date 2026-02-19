@@ -43,18 +43,20 @@
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+                    
+                    @can(\App\Enums\Permissions::CREATE_PLAYER_NOTES->value)
+                        <div class="flex justify-end items-center gap-4">
+                            <x-primary-button
+                                wire:loading.attr="disabled"
+                                >
+                                Save Note
+                            </x-primary-button>
 
-                    <div class="flex justify-end items-center gap-4">
-                        <x-primary-button
-                            wire:loading.attr="disabled"
-                            >
-                            Save Note
-                        </x-primary-button>
-
-                        <x-action-message class="me-3" on="note-created">
-                            Note saved successfully.
-                        </x-action-message>
-                    </div>
+                            <x-action-message class="me-3" on="note-created">
+                                Note saved successfully.
+                            </x-action-message>
+                        </div>
+                    @endcan
 
                 </form>
 

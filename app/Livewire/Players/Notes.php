@@ -4,6 +4,7 @@ namespace App\Livewire\Players;
 
 use App\Actions\CreatePlayerNoteAction;
 use App\DTOs\CreatePlayerNoteData;
+use App\Enums\Permissions;
 use App\Repositories\Contracts\PlayerNoteRepositoryInterface;
 use App\Repositories\Contracts\PlayerRepositoryInterface;
 use Illuminate\Contracts\View\View;
@@ -54,6 +55,8 @@ class Notes extends Component
      */
     public function save(CreatePlayerNoteAction $action): void
     {
+        abort_if(!auth()->user()->can(Permissions::CREATE_PLAYER_NOTES->value), Response::HTTP_FORBIDDEN);
+        
         $this->validate();
 
         $action->execute(

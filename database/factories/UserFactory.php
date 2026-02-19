@@ -69,4 +69,16 @@ class UserFactory extends Factory
             $user->assignRole(Roles::PLAYER->value);
         });
     }
+
+    /**
+     * Indicate that the user should have the "viewer" role.
+     * 
+     * @return static
+     */
+    public function viewer(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole(Roles::VIEWER->value);
+        });
+    }
 }

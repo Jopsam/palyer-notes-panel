@@ -16,7 +16,7 @@ class PlayerNotePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(Roles::AGENT->value)
+        return $user->hasAnyRole([Roles::AGENT->value, Roles::VIEWER->value])
             && $user->hasPermissionTo(Permissions::VIEW_PLAYER_NOTES->value);
     }
 

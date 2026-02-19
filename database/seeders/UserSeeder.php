@@ -20,6 +20,12 @@ class UserSeeder extends Seeder
             'email' => 'agent@test.com',
         ]);
 
+        // Create a viewer with a known email for testing purposes.
+        User::factory()->viewer()->create([
+            'name' => 'Viewer',
+            'email' => 'viewer@test.com',
+        ]);
+
         // Create 20 player accounts.
         User::factory(20)->player()->create();
     }
